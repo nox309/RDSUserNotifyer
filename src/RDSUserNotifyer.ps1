@@ -22,6 +22,7 @@
 #---------------------------------------------------------[Initialisations]--------------------------------------------------------
 $WID = [System.Security.Principal.WindowsIdentity]::GetCurrent()
 $Prp = New-Object System.Security.Principal.WindowsPrincipal($WID)
+$Adm = [System.Security.Principal.WindowsBuiltInRole]::Administrator
 $IsAdmin = $Prp.IsInRole($Adm)
 if( !$IsAdmin ){
     Write-Host -ForegroundColor Red "The script does not have enough rights to run. Please start with admin rights!"
