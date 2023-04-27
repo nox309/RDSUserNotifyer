@@ -72,13 +72,18 @@ $config = Get-IniContent $ConfigFilePath
 
 $date = (get-date -Format yyyyMMdd)
 $filename = $date + "_RDSUserNotifyer.log"
-$logpath = $config["Settings"]["Logpath"]
+if ($config["Settings"]["Logpath"] -eq "\\Server\Logpath\RDSUserNotifyer\") {
+    $logpath = ".\"
+}
+else {
+    $logpath = $config["Settings"]["Logpath"]
+}
+
 $cLoglevel = $config["Settings"]["Loglevel"]
 $cConole = if ($config["Settings"]["ConsolenOutput"]) { $true } else { $false }
 $log = $logpath + $filename
-$rdsessionhost = if ($config["Settings"]["rdsessionhost"]) { $true } else { $false }
+$rdsessionhost = if ($config["Settings"]["rdsessionhost"] -icontains "True") { $true } else { $false }
 $Broker = $config["Settings"]["Broker"]
-
 $messagetitel = $config["Settings"]["messagetitel"]
 $message = $config["Settings"]["message"]
 
@@ -348,14 +353,14 @@ if ($result -eq [System.Windows.Forms.DialogResult]::OK)
 Write-Log "The following value was chosen as the messagetitel: $messagetitel" -console $false -Severity $cLoglevel
 Write-Log "The following value was chosen as the message: $message" -console $false -Severity $cLoglevel
 
-if ($rdsessionhost) {
+if ($rdsessionhost -eq $true) {
     Write-Log "Parameter rdessionhost is Ture, only connections on $rdsessionhost will be notified!" -console $false -Severity $cLoglevel
-    Send-RDMessageRDSH -broker $Broker -sessionhost $rdsessionhost -msgtitel $messagetitel -msg $message
+    Send-RDMessageRDSH -DSHbroker $Broker -sessionhost $rdsessionhost -msgtitel $messagetitel -msg $message
     }
     else {
     Write-Verbose "No RDSessionHost Server specified, all users on $Broker will be notified"
     Write-Log "No RDSessionHost Server specified, all users on $Broker will be notified" -console $false -Severity $cLoglevel
-    Send-RDMessageAll -msgtitel $messagetitel -msg $message -broker $Broker
+    Send-RDMessageAll -msgtitel $messagetitel -msg $message -broker $Allbroker
 
 }
 
