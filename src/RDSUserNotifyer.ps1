@@ -20,6 +20,14 @@
 #>
 
 #---------------------------------------------------------[Initialisations]--------------------------------------------------------
+$WID = [System.Security.Principal.WindowsIdentity]::GetCurrent()
+$Prp = New-Object System.Security.Principal.WindowsPrincipal($WID)
+$IsAdmin = $Prp.IsInRole($Adm)
+if( !$IsAdmin ){
+    Write-Host -ForegroundColor Red "The script does not have enough rights to run. Please start with admin rights!"
+    break
+    }
+
 $ConfigFilePath = ".\config.ini"
 if (-not (Test-Path $ConfigFilePath)) {
     Write-Warning "config.ini file not found. Creating default file."
