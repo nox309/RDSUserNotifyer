@@ -361,7 +361,7 @@ if ($rdsessionhost -eq $true) {
     else {
     Write-Verbose "No RDSessionHost Server specified, all users on $Broker will be notified"
     Write-Log "No RDSessionHost Server specified, all users on $Broker will be notified" -console $false -Severity $cLoglevel
-    Send-RDMessageAll -msgtitel $messagetitel -msg $message -broker $Allbroker
+    Send-RDMessageAll -msgtitel $messagetitel -msg $message -Allbroker $Broker 
 
 }
 
