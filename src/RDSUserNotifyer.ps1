@@ -262,7 +262,7 @@ function Get-InstalledModule {
             $user = (($uid).UserName)
             $hostserver = (($uid).HostServer)
             Write-output "sending message to $user with titel $msgtitel"
-            Send-RDUserMessage -HostServer $RDSHbroker -UnifiedSessionID $id -MessageTitle "$msgtitel" -MessageBody "$msg"
+            Send-RDUserMessage -HostServer $sessionhost -UnifiedSessionID $id -MessageTitle "$msgtitel" -MessageBody "$msg"
             Write-Verbose "send message on rdbroker $RDSHbroker to usersessionid $id with titel $msgtitel on RDSH $hostserver"
             }
             
