@@ -357,7 +357,8 @@ Write-Log "The following value was chosen as the message: $message" -console $fa
 if ($rdsessionhost -eq $true) {
     foreach($Server in $Config["rdsessionhost"].Keys){
         $RDSHost = $Config["rdsessionhost"][$Server]
-        Write-Log "RDS Broker: $ServerValue" -console $cConole -Severity $cLoglevel
+        TODO: Comentar ausblenden bzw. nicht verwenden
+        Write-Log "RDS Broker: $Broker" -console $cConole -Severity $cLoglevel
         Write-Log "Parameter rdessionhost is Ture, only connections on $RDSHost will be notified!" -console $false -Severity $cLoglevel
         Send-RDMessageRDSH -RDSHbroker $Broker -sessionhost $RDSHost -msgtitel $messagetitel -msg $message
     }
@@ -368,4 +369,3 @@ if ($rdsessionhost -eq $true) {
     Send-RDMessageAll -msgtitel $messagetitel -msg $message -Allbroker $Broker 
 
 }
-
